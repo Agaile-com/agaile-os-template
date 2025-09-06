@@ -1,0 +1,513 @@
+# Agent Configuration Framework for HIL Workflow
+# Defines specialized agents for multi-phase development operations
+
+version: "1.0"
+last_updated: "2025-09-04"
+
+# =============================================================================
+# AGENT DEFINITIONS
+# =============================================================================
+
+agents:
+  # TypeScript & Build Error Resolution Specialist
+  fixer-agent:
+    description: "Intelligent issue resolution specialist for TypeScript, build errors, and development environment problems"
+    capabilities:
+      - error_pattern_recognition
+      - confidence_based_diagnostics
+      - progressive_resolution_phases
+      - verification_and_rollback
+      - cache_management
+      - dependency_resolution
+    
+    specializations:
+      - module_resolution_errors
+      - build_compilation_failures
+      - cache_related_issues
+      - dependency_conflicts
+      - runtime_server_errors
+      - configuration_validation
+    
+    confidence_patterns:
+      high_confidence: # 85-100%
+        - pattern: /Cannot find module.*vendor-chunks/
+          confidence: 92
+          strategy: ["cache_clear", "rebuild", "deps_refresh"]
+        - pattern: /ENOENT.*no such file or directory/
+          confidence: 95
+          strategy: ["file_check", "path_validation", "permission_fix"]
+      
+      medium_confidence: # 60-84%
+        - pattern: /Type.*is not assignable to type/
+          confidence: 65
+          strategy: ["type_gen", "schema_sync", "manual_review"]
+        - pattern: /Module.*not found/
+          confidence: 70
+          strategy: ["deps_refresh", "module_path_check"]
+      
+      low_confidence: # 30-59%
+        - pattern: /.*compilation error.*/
+          confidence: 45
+          strategy: ["comprehensive_analysis", "manual_intervention"]
+    
+    hil_integration:
+      default_approval: "CONFIRM"
+      risk_assessment: "MEDIUM"
+      confidence_threshold: 70
+      emergency_override: true
+    
+    task_delegation:
+      available_agents: ["general-purpose", "file-creator"]
+      fallback_agent: "general-purpose"
+      max_execution_time: "10 minutes"
+      checkpoint_interval: "2 minutes"
+
+  # Database Schema & Migration Specialist  
+  db-migrate-agent:
+    description: "Database schema synchronization and migration management specialist"
+    capabilities:
+      - schema_synchronization
+      - migration_generation
+      - cross_environment_management
+      - rollback_planning
+      - data_integrity_validation
+      - performance_optimization
+    
+    specializations:
+      - prisma_schema_sync
+      - supabase_migrations
+      - type_generation
+      - constraint_validation
+      - cascade_operations
+      - environment_coordination
+    
+    confidence_patterns:
+      high_confidence: # 85-100%
+        - pattern: /Property.*does not exist.*Prisma/
+          confidence: 90
+          strategy: ["schema_sync", "type_generation", "validation"]
+        - pattern: /Cannot find name.*Prisma/
+          confidence: 88
+          strategy: ["client_regeneration", "schema_validation"]
+      
+      medium_confidence: # 60-84%
+        - pattern: /Database.*connection.*failed/
+          confidence: 75
+          strategy: ["connection_validation", "env_check", "service_restart"]
+        - pattern: /Migration.*failed/
+          confidence: 70
+          strategy: ["rollback_analysis", "constraint_check", "manual_review"]
+    
+    hil_integration:
+      default_approval: "APPROVE"
+      risk_assessment: "HIGH"
+      confidence_threshold: 85
+      emergency_override: false
+      requires_backup: true
+    
+    task_delegation:
+      available_agents: ["general-purpose"]
+      fallback_agent: "general-purpose"
+      max_execution_time: "8 minutes"
+      checkpoint_interval: "3 minutes"
+
+  # CI/CD & Deployment Specialist
+  ci-cd-agent:
+    description: "Continuous integration and deployment orchestration specialist"
+    capabilities:
+      - pipeline_orchestration
+      - environment_management
+      - deployment_validation
+      - rollback_coordination
+      - health_monitoring
+      - performance_tracking
+    
+    specializations:
+      - github_actions_management
+      - vercel_deployments
+      - environment_promotion
+      - quality_gates
+      - rollback_procedures
+      - monitoring_integration
+    
+    confidence_patterns:
+      high_confidence: # 85-100%
+        - pattern: /Build.*successful.*ready for deployment/
+          confidence: 95
+          strategy: ["deploy", "monitor", "validate"]
+        - pattern: /All tests passing/
+          confidence: 90
+          strategy: ["promote_environment", "health_check"]
+      
+      medium_confidence: # 60-84%
+        - pattern: /Some tests failing/
+          confidence: 65
+          strategy: ["analyze_failures", "selective_deployment"]
+        - pattern: /Build warnings present/
+          confidence: 70
+          strategy: ["warning_analysis", "risk_assessment"]
+    
+    hil_integration:
+      default_approval: "APPROVE"
+      risk_assessment: "HIGH"
+      confidence_threshold: 90
+      emergency_override: false
+      production_safeguards: true
+    
+    task_delegation:
+      available_agents: ["general-purpose", "git-workflow"]
+      fallback_agent: "general-purpose"
+      max_execution_time: "15 minutes"
+      checkpoint_interval: "5 minutes"
+
+  # Testing & Quality Assurance Specialist
+  quality-agent:
+    description: "Comprehensive testing and code quality assurance specialist"
+    capabilities:
+      - test_orchestration
+      - quality_analysis
+      - coverage_validation
+      - performance_testing
+      - accessibility_validation
+      - security_scanning
+    
+    specializations:
+      - automated_test_generation
+      - chrome_mcp_integration
+      - visual_regression_testing
+      - accessibility_testing
+      - security_vulnerability_scanning
+      - performance_benchmarking
+    
+    confidence_patterns:
+      high_confidence: # 85-100%
+        - pattern: /All tests.*passing/
+          confidence: 95
+          strategy: ["expand_coverage", "performance_test", "accessibility_check"]
+        - pattern: /Coverage.*above.*80%/
+          confidence: 90
+          strategy: ["quality_gates_passed", "deployment_ready"]
+      
+      medium_confidence: # 60-84%
+        - pattern: /Some tests failing/
+          confidence: 70
+          strategy: ["analyze_failures", "targeted_fixes", "rerun_tests"]
+        - pattern: /Coverage.*below.*threshold/
+          confidence: 65
+          strategy: ["generate_tests", "review_gaps", "manual_testing"]
+    
+    hil_integration:
+      default_approval: "CONFIRM"
+      risk_assessment: "MEDIUM"
+      confidence_threshold: 75
+      emergency_override: true
+    
+    task_delegation:
+      available_agents: ["general-purpose", "test-runner"]
+      fallback_agent: "test-runner"
+      max_execution_time: "12 minutes"
+      checkpoint_interval: "4 minutes"
+
+  # Documentation & Knowledge Management Specialist
+  docs-agent:
+    description: "Documentation consolidation and knowledge management specialist"
+    capabilities:
+      - documentation_analysis
+      - knowledge_extraction
+      - content_consolidation
+      - ai_optimization
+      - legal_compliance
+      - multi_language_support
+    
+    specializations:
+      - hil_workflow_documentation
+      - api_documentation
+      - legal_document_generation
+      - knowledge_base_management
+      - translation_management
+      - context_optimization
+    
+    confidence_patterns:
+      high_confidence: # 85-100%
+        - pattern: /Documentation.*complete.*ready for consolidation/
+          confidence: 90
+          strategy: ["extract_patterns", "consolidate_knowledge", "optimize_ai"]
+        - pattern: /Legal documents.*generated.*compliant/
+          confidence: 95
+          strategy: ["validate_compliance", "update_knowledge_base"]
+      
+      medium_confidence: # 60-84%
+        - pattern: /Documentation gaps identified/
+          confidence: 70
+          strategy: ["gap_analysis", "content_generation", "review_needed"]
+        - pattern: /Translation keys missing/
+          confidence: 75
+          strategy: ["key_generation", "translation_completion", "validation"]
+    
+    hil_integration:
+      default_approval: "CONFIRM"
+      risk_assessment: "LOW"
+      confidence_threshold: 70
+      emergency_override: true
+    
+    task_delegation:
+      available_agents: ["general-purpose", "file-creator"]
+      fallback_agent: "general-purpose"
+      max_execution_time: "8 minutes"
+      checkpoint_interval: "3 minutes"
+
+# =============================================================================
+# AGENT COORDINATION PATTERNS
+# =============================================================================
+
+coordination_patterns:
+  # Multi-Agent TypeScript Resolution Workflow
+  typescript_resolution:
+    description: "Coordinated TypeScript error resolution using multiple specialized agents"
+    sequence:
+      - agent: "db-migrate-agent"
+        phase: "schema_synchronization"
+        conditions: ["database_errors_detected"]
+        confidence_threshold: 85
+        
+      - agent: "fixer-agent"
+        phase: "build_configuration_fixes"
+        conditions: ["compilation_errors_detected"]
+        confidence_threshold: 70
+        dependencies: ["schema_synchronization"]
+        
+      - agent: "quality-agent"
+        phase: "code_quality_validation"
+        conditions: ["linting_errors_detected"]
+        confidence_threshold: 60
+        dependencies: ["build_configuration_fixes"]
+        
+      - agent: "ci-cd-agent"
+        phase: "deployment_validation"
+        conditions: ["always_run_after_fixes"]
+        confidence_threshold: 90
+        dependencies: ["code_quality_validation"]
+    
+    fallback_strategy: "escalate_to_manual_review"
+    max_parallel_agents: 2
+    checkpoint_validation: true
+
+  # Full Development Cycle Coordination
+  development_cycle:
+    description: "Complete development lifecycle from spec to deployment"
+    sequence:
+      - agent: "docs-agent"
+        phase: "specification_analysis"
+        conditions: ["spec_available"]
+        
+      - agent: "fixer-agent"
+        phase: "environment_preparation"
+        conditions: ["development_environment"]
+        
+      - agent: "db-migrate-agent"
+        phase: "schema_updates"
+        conditions: ["database_changes_required"]
+        dependencies: ["environment_preparation"]
+        
+      - agent: "quality-agent"
+        phase: "testing_validation"
+        conditions: ["code_changes_made"]
+        dependencies: ["schema_updates"]
+        
+      - agent: "ci-cd-agent"
+        phase: "deployment_orchestration"
+        conditions: ["testing_passed"]
+        dependencies: ["testing_validation"]
+        
+      - agent: "docs-agent"
+        phase: "knowledge_consolidation"
+        conditions: ["deployment_successful"]
+        dependencies: ["deployment_orchestration"]
+
+# =============================================================================
+# HIL INTEGRATION FRAMEWORK
+# =============================================================================
+
+hil_integration:
+  # Global HIL Settings
+  global_settings:
+    default_mode: "analyze_recommend"
+    auto_execute_threshold: 85
+    emergency_override_enabled: true
+    audit_logging: true
+    learning_enabled: true
+  
+  # Risk Assessment Matrix
+  risk_matrix:
+    agent_risk_multipliers:
+      fixer-agent: 1.0
+      db-migrate-agent: 1.5
+      ci-cd-agent: 1.8
+      quality-agent: 0.8
+      docs-agent: 0.6
+    
+    environment_multipliers:
+      development: 0.7
+      staging: 1.0
+      production: 2.0
+  
+  # Approval Workflows
+  approval_workflows:
+    confidence_based:
+      high_confidence: # 85-100%
+        approval_level: "NOTIFY"
+        auto_execute: true
+        checkpoint_frequency: "end_of_phase"
+      
+      medium_confidence: # 60-84%
+        approval_level: "CONFIRM"
+        auto_execute: false
+        checkpoint_frequency: "every_major_step"
+      
+      low_confidence: # 30-59%
+        approval_level: "APPROVE"
+        auto_execute: false
+        checkpoint_frequency: "every_step"
+        manual_review_required: true
+
+# =============================================================================
+# LEARNING & ADAPTATION SYSTEM
+# =============================================================================
+
+learning_system:
+  success_tracking:
+    metrics:
+      - execution_time
+      - success_rate
+      - user_satisfaction
+      - error_reduction
+      - pattern_accuracy
+  
+  adaptation_rules:
+    confidence_adjustment:
+      success_threshold: 0.9  # 90% success rate to increase confidence
+      failure_threshold: 0.6  # 60% failure rate to decrease confidence
+      adjustment_increment: 0.05  # 5% adjustment per update
+    
+    pattern_evolution:
+      new_pattern_threshold: 3  # 3 occurrences to establish new pattern
+      pattern_retirement_threshold: 0.3  # 30% accuracy to retire pattern
+      learning_window: "30 days"
+  
+  feedback_integration:
+    user_feedback_weight: 0.8
+    automated_metrics_weight: 0.2
+    feedback_decay_rate: 0.1  # 10% decay per week
+
+# =============================================================================
+# ERROR HANDLING & RECOVERY
+# =============================================================================
+
+error_handling:
+  agent_failure_recovery:
+    max_retries: 2
+    retry_delay: "30 seconds"
+    fallback_strategies:
+      - use_fallback_agent
+      - escalate_to_manual
+      - abort_with_rollback
+  
+  coordination_failure_recovery:
+    checkpoint_rollback: true
+    partial_success_handling: "continue_with_approval"
+    total_failure_handling: "comprehensive_rollback"
+  
+  escalation_procedures:
+    automated_escalation:
+      - low_confidence_detection
+      - repeated_failures
+      - timeout_exceeded
+      - user_intervention_requested
+    
+    escalation_targets:
+      - manual_review_queue
+      - expert_consultation
+      - emergency_procedures
+      - incident_management
+
+# =============================================================================
+# INTEGRATION POINTS
+# =============================================================================
+
+integration_points:
+  # Claude Code Task Tool Integration
+  task_tool_mapping:
+    available_agents: 
+      - "general-purpose"
+      - "statusline-setup" 
+      - "output-style-setup"
+      - "date-checker"
+      - "context-fetcher"
+      - "file-creator"
+      - "git-workflow"
+      - "test-runner"
+      - "project-manager"
+    
+    agent_to_task_mapping:
+      fixer-agent: "general-purpose"
+      db-migrate-agent: "general-purpose" 
+      ci-cd-agent: "git-workflow"
+      quality-agent: "test-runner"
+      docs-agent: "file-creator"
+  
+  # Command Integration
+  command_integration:
+    typescripter: 
+      primary_agent: "fixer-agent"
+      coordination_pattern: "typescript_resolution"
+      fallback_command: "manual_analysis"
+    
+    db-migrate:
+      primary_agent: "db-migrate-agent"
+      coordination_pattern: "database_operations"
+      fallback_command: "manual_migration"
+    
+    ci-cd:
+      primary_agent: "ci-cd-agent"
+      coordination_pattern: "deployment_pipeline"
+      fallback_command: "manual_deployment"
+    
+    testing:
+      primary_agent: "quality-agent"
+      coordination_pattern: "quality_assurance"
+      fallback_command: "manual_testing"
+    
+    documenter:
+      primary_agent: "docs-agent"
+      coordination_pattern: "knowledge_management"
+      fallback_command: "manual_documentation"
+
+# =============================================================================
+# PERFORMANCE MONITORING
+# =============================================================================
+
+performance_monitoring:
+  metrics_collection:
+    agent_performance:
+      - execution_time_per_agent
+      - success_rate_per_agent
+      - confidence_accuracy_per_agent
+      - resource_utilization_per_agent
+    
+    coordination_performance:
+      - total_workflow_time
+      - phase_transition_efficiency
+      - parallel_execution_benefits
+      - checkpoint_overhead
+  
+  optimization_triggers:
+    performance_degradation: "20% slowdown"
+    success_rate_decline: "10% decrease"
+    user_satisfaction_drop: "15% decrease"
+    resource_constraints: "80% utilization"
+  
+  reporting:
+    frequency: "weekly"
+    recipients: ["development_team", "hil_operators"]
+    metrics_dashboard: true
+    trend_analysis: true

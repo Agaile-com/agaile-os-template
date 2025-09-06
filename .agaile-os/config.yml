@@ -1,0 +1,135 @@
+# AgAIle OS Configuration
+# Unified configuration for multi-IDE integration with HIL methodology
+
+framework:
+  name: "agaile-os"
+  version: "1.0.0"
+  methodology: "HIL" # Human-in-the-Loop
+  architecture: "centralized" # Commands and agents stored in .agaile-os/
+
+# Centralized Command System
+commands:
+  source_directory: ".agaile-os/commands"
+  shared_directory: ".agaile-os/commands/shared"
+  auto_generation: true
+  
+  # Available commands (auto-discovered from source_directory)
+  available:
+    - analyze-product
+    - ci-cd
+    - create-feature
+    - create-tasks
+    - db-migrate
+    - documenter
+    - execute-tasks
+    - fixer
+    - g
+    - hil-status
+    - plan-product
+    - typescripter
+    - typescripter-agent
+    - verify-deployment
+
+# Centralized Agent System
+agents:
+  source_directory: ".agaile-os/agents"
+  config_file: ".agaile-os/agents/config.yml"
+  auto_discovery: true
+  
+  # Available agents (auto-discovered from source_directory)
+  available:
+    - context-fetcher
+    - database-schema-fixer
+    - date-checker
+    - file-creator
+    - git-workflow
+    - project-manager
+    - task-checker
+    - task-executor
+    - task-orchestrator
+    - test-runner
+
+# IDE Integrations
+integrations:
+  claude_code:
+    enabled: true
+    commands_directory: ".claude/commands"
+    agents_directory: ".claude/agents"
+    reference_type: "copy" # Following proven pattern
+    auto_sync: true
+    
+  cursor:
+    enabled: true
+    rules_directory: ".cursor/rules"
+    cursorrules_file: ".cursorrules"
+    reference_type: "mdc_format" # .mdc files with frontmatter
+    auto_sync: true
+
+# Command Generation (add mappings with safe defaults used by generators)
+command_generation:
+  mappings:
+    claude_code:
+      template: "claude_command.md"
+    cursor:
+      template: "cursor_command.md"
+
+# Project Types (declare default instructions root for generators/bridge)
+project_types:
+  default:
+    instructions: ".agaile-os/instructions"
+
+# Feature tracking path (for bridge compatibility)
+feature_tracking:
+  master_tracking: ".agaile-os/MASTER_TRACKING.md"
+
+# HIL Workflow Configuration
+hil_workflow:
+  phases:
+    1: "Requirements & Specification"
+    2: "Task Planning & Execution"
+    3: "Database Migration"
+    4: "Quality Assurance & Validation"
+    5: "Pre-Deployment Verification"
+    6: "CI/CD Pipeline Management"
+    7: "Version Control & Deployment"
+    8: "Documentation & Knowledge Management"
+  
+  automation_targets:
+    task_execution: "87-92%"
+    type_resolution: "60-70%"
+    deployment_validation: "95-100%"
+    documentation: "75-90%"
+
+# Project-Specific Settings
+project:
+  name: "agaile-os-template"
+  type: "nextjs_supabase"
+  package_manager: "pnpm"
+  database: "supabase"
+  deployment: "vercel"
+  
+  # Critical tracking files
+  master_tracking: ".agaile-os/MASTER_TRACKING.md"
+  roadmap: ".agaile-os/product/roadmap.md"
+  active_features: ".agaile-os/features/active/"
+  active_prds: ".agaile-os/prds/active/"
+
+# Automation Settings
+automation:
+  priority: "commands_first" # Always check commands before manual work
+  agent_deployment: "intelligent" # Auto-deploy appropriate agents
+  parallel_execution: true
+  dependency_management: true
+  
+# Reference Generation
+reference_generation:
+  script: ".agaile-os/setup/generate-ide-references.sh"
+  auto_regenerate: true
+  watch_mode: false
+
+# Quality Assurance
+quality:
+  pre_deployment_validation: true
+  type_checking: "strict"
+  test_coverage_target: 70
+  security_scanning: true

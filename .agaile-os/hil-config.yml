@@ -1,0 +1,33 @@
+# HIL (Human-in-the-Loop) Configuration
+version: "1.0"
+project_name: "$(basename $PROJECT_ROOT)"
+
+# Approval thresholds
+confidence_thresholds:
+  auto_execute: 85
+  interactive: 60
+  manual_review: 30
+
+# Environment risk multipliers
+environments:
+  development:
+    risk_multiplier: 0.7
+    auto_execute_enabled: true
+  staging:
+    risk_multiplier: 1.0
+    auto_execute_enabled: true
+  production:
+    risk_multiplier: 2.0
+    auto_execute_enabled: false
+
+# Agent configuration
+agents:
+  enabled: true
+  default_mode: "interactive"
+  learning_enabled: true
+
+# Notification settings
+notifications:
+  critical_escalation_minutes: 15
+  email_enabled: false
+  slack_enabled: false

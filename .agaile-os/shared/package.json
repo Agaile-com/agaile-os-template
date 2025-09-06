@@ -1,0 +1,30 @@
+{
+  "name": "agaile-os-command-processor",
+  "version": "1.0.0",
+  "description": "Dynamic command processor for AgAIle OS multi-IDE integration",
+  "main": "command-processor.js",
+  "scripts": {
+    "generate": "node command-processor.js generate",
+    "watch": "node command-processor.js watch",
+    "test": "node command-processor.js generate && echo 'Command generation test completed'"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "keywords": [
+    "agaile-os",
+    "command-processor",
+    "multi-ide",
+    "claude",
+    "cursor",
+    "workflow"
+  ],
+  "author": "AgAIle OS",
+  "license": "MIT"
+}

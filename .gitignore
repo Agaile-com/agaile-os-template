@@ -1,0 +1,51 @@
+# AgAIle OS
+.agaile-os/logs/
+.agaile-os/features/active/*-wip/
+*.log
+*.tmp
+
+# IDE
+.cursor/
+.vscode/
+.idea/
+.DS_Store
+
+# Dependencies
+node_modules/
+.pnpm-store/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+*.swp
+*.swo
+*~
+.#*
+.claude/mcp.json
+
+# Project-specific Claude configuration (template provided in .agaile-os/templates/)
+/CLAUDE.md
+
+# Project-specific tracking document (template provided in .agaile-os/templates/)
+.agaile-os/MASTER_TRACKING.md

@@ -1,0 +1,46 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "Template project powered by Agaile-OS - Agent-Enhanced Development Operating System",
+  "main": "index.js",
+  "scripts": {
+    "setup": "bash .agaile-os/setup.sh",
+    "init": "bash .agaile-os/init.sh",
+    "validate": "node .agaile-os/scripts/validate.js",
+    "commands:generate": "node .agaile-os/shared/command-processor.js generate",
+    "commands:watch": "node .agaile-os/shared/command-processor.js watch",
+    "bridge:status": "node .agaile-os/shared/command-bridge.js status",
+    "bridge:commands": "node .agaile-os/shared/command-bridge.js commands",
+    "smoke": "npm run commands:generate && node .agaile-os/shared/command-bridge.js status && node .agaile-os/shared/command-bridge.js commands"
+  },
+  "keywords": [
+    "ai",
+    "development",
+    "automation",
+    "agents",
+    "claude",
+    "cursor",
+    "hil",
+    "workflow",
+    "devops"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Agaile-com/agaile-os-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Agaile-com/agaile-os-template/issues"
+  },
+  "homepage": "https://github.com/Agaile-com/agaile-os-template#readme",
+  "devDependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^11.0.0",
+    "inquirer": "^9.2.0",
+    "js-yaml": "^4.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

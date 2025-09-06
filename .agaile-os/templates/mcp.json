@@ -1,0 +1,53 @@
+{
+    "mcpServers": {
+        "supabase": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@supabase/mcp-server-supabase@latest",
+                "--access-token",
+                "${SUPABASE_ACCESS_TOKEN}"
+            ]
+        },
+        "netlify": {
+            "command": "npx",
+            "args": ["-y", "@netlify/mcp"]
+        },
+        "actors-mcp-server": {
+            "command": "npx",
+            "args": ["-y", "@apify/actors-mcp-server"],
+            "env": {
+                "APIFY_TOKEN": "${APIFY_TOKEN}"
+            }
+        },
+        "github": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-github"],
+            "env": {
+                "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+            }
+        },
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "${PROJECT_FILESYSTEM_PATH}"
+            ]
+        },
+        "context7": {
+            "command": "npx",
+            "args": ["-y", "@upstash/context7-mcp@latest"]
+        },
+        "sequential-thinking": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+        },
+        "playwright": {
+            "command": "npx",
+            "args": [
+                "@playwright/mcp@latest"
+            ]
+        }
+    }
+}

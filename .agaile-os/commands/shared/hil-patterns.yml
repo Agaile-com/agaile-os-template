@@ -1,0 +1,285 @@
+# HIL (Human-in-the-Loop) Framework Patterns
+# Shared configuration for command approval levels and user interaction patterns
+
+# =============================================================================
+# HIL APPROVAL LEVELS
+# =============================================================================
+
+approval_levels:
+  NONE:
+    description: "No human approval required - execute immediately"
+    use_cases: ["read-only operations", "status checks", "low-risk analysis"]
+    safeguards: ["audit logging", "output validation"]
+    
+  NOTIFY:
+    description: "Execute with notification - inform user of actions taken"
+    use_cases: ["cache clearing", "dependency refresh", "safe fixes"]
+    safeguards: ["pre-execution summary", "post-execution report"]
+    
+  CONFIRM:
+    description: "Require explicit confirmation before execution"
+    use_cases: ["build fixes", "schema changes", "file modifications"]
+    safeguards: ["show execution plan", "allow cancellation", "rollback options"]
+    
+  APPROVE:
+    description: "Require detailed approval with risk assessment"
+    use_cases: ["production deployments", "database migrations", "destructive operations"]
+    safeguards: ["comprehensive risk analysis", "manual verification", "approval audit trail"]
+
+# =============================================================================
+# RISK ASSESSMENT CATEGORIES
+# =============================================================================
+
+risk_categories:
+  LOW:
+    threshold: 0-30
+    characteristics: ["reversible", "isolated impact", "well-tested patterns"]
+    approval: "NOTIFY"
+    
+  MEDIUM:
+    threshold: 31-60
+    characteristics: ["partially reversible", "limited scope", "established procedures"]
+    approval: "CONFIRM"
+    
+  HIGH:
+    threshold: 61-85
+    characteristics: ["difficult to reverse", "broad impact", "complex dependencies"]
+    approval: "APPROVE"
+    
+  CRITICAL:
+    threshold: 86-100
+    characteristics: ["irreversible", "system-wide impact", "production affecting"]
+    approval: "APPROVE + MANUAL_VERIFICATION"
+
+# =============================================================================
+# ENVIRONMENT-SPECIFIC CONTROLS
+# =============================================================================
+
+environment_controls:
+  development:
+    default_approval: "CONFIRM"
+    risk_multiplier: 0.7
+    emergency_override: true
+    
+  staging:
+    default_approval: "APPROVE"
+    risk_multiplier: 1.0
+    emergency_override: false
+    
+  production:
+    default_approval: "APPROVE"
+    risk_multiplier: 1.5
+    emergency_override: false
+    approval_audit: required
+
+# =============================================================================
+# OPERATION TYPE MAPPINGS
+# =============================================================================
+
+operation_types:
+  database_migration:
+    base_risk: "HIGH"
+    requires_preview: true
+    rollback_plan: required
+    approval_level: "APPROVE"
+    
+  schema_changes:
+    base_risk: "HIGH"
+    requires_preview: true
+    rollback_plan: required
+    approval_level: "APPROVE"
+    
+  build_fixes:
+    base_risk: "MEDIUM"
+    requires_preview: true
+    rollback_plan: optional
+    approval_level: "CONFIRM"
+    
+  cache_operations:
+    base_risk: "LOW"
+    requires_preview: false
+    rollback_plan: none
+    approval_level: "NOTIFY"
+    
+  dependency_changes:
+    base_risk: "MEDIUM"
+    requires_preview: true
+    rollback_plan: required
+    approval_level: "CONFIRM"
+    
+  deployment:
+    base_risk: "HIGH"
+    requires_preview: true
+    rollback_plan: required
+    approval_level: "APPROVE"
+    
+  rollback:
+    base_risk: "CRITICAL"
+    requires_preview: true
+    rollback_plan: "paradox - is itself rollback"
+    approval_level: "APPROVE + MANUAL_VERIFICATION"
+
+# =============================================================================
+# INTERACTION PATTERNS
+# =============================================================================
+
+interaction_patterns:
+  confirmation_prompt:
+    template: |
+      🔍 **{operation_name}** - Risk Level: {risk_level}
+      
+      **Proposed Actions:**
+      {action_list}
+      
+      **Estimated Impact:**
+      - Duration: {estimated_duration}
+      - Scope: {impact_scope}
+      - Reversibility: {reversibility}
+      
+      **Proceed?** [y/N/details/plan]
+    
+  approval_request:
+    template: |
+      ⚠️  **APPROVAL REQUIRED** - {operation_name}
+      
+      **Risk Assessment:**
+      - Risk Level: {risk_level} ({risk_score}/100)
+      - Environment: {environment}
+      - Impact Scope: {impact_scope}
+      
+      **Detailed Plan:**
+      {execution_plan}
+      
+      **Rollback Strategy:**
+      {rollback_plan}
+      
+      **Approval Required:** [approve/deny/modify/defer]
+    
+  progress_notification:
+    template: |
+      🔄 **{operation_name}** - Phase {current_phase}/{total_phases}
+      
+      ✅ Completed: {completed_steps}
+      🔄 Current: {current_step}
+      ⏳ Remaining: {remaining_steps}
+      
+      [continue/pause/abort]
+
+# =============================================================================
+# CONFIDENCE SCORING
+# =============================================================================
+
+confidence_scoring:
+  pattern_matching:
+    high_confidence: 85-100  # Well-established patterns
+    medium_confidence: 60-84  # Probable matches with some uncertainty
+    low_confidence: 30-59    # Uncertain matches requiring approval
+    unreliable: 0-29         # Should not auto-execute
+    
+  strategy_selection:
+    proven_strategy: 90-100   # Battle-tested approaches
+    established_strategy: 75-89  # Well-documented approaches
+    experimental_strategy: 50-74  # Newer or less-tested approaches
+    untested_strategy: 0-49   # Requires manual validation
+    
+  success_probability:
+    very_likely: 85-100      # High probability of success
+    likely: 65-84           # Good chance of success
+    uncertain: 45-64        # Moderate chance of success
+    risky: 0-44            # Low probability or high failure risk
+
+# =============================================================================
+# EMERGENCY OVERRIDES
+# =============================================================================
+
+emergency_overrides:
+  conditions:
+    - production_outage
+    - security_incident
+    - data_corruption
+    - service_unavailable
+    
+  requirements:
+    - explicit_override_flag: "--emergency-override"
+    - incident_reference: required
+    - post_incident_review: required
+    - approval_audit: "bypassed due to emergency"
+    
+  limitations:
+    - no_destructive_operations: ["data deletion", "schema drops", "user removal"]
+    - requires_post_approval: within 24 hours
+    - audit_trail: comprehensive logging required
+
+# =============================================================================
+# LEARNING AND ADAPTATION
+# =============================================================================
+
+learning_patterns:
+  success_tracking:
+    - operation_type
+    - confidence_score
+    - actual_outcome
+    - execution_time
+    - user_satisfaction
+    
+  failure_analysis:
+    - failure_reason
+    - confidence_vs_reality
+    - missed_indicators
+    - user_corrections
+    - improvement_suggestions
+    
+  pattern_evolution:
+    - update_confidence_thresholds
+    - refine_risk_assessments
+    - improve_pattern_matching
+    - enhance_user_experience
+
+# =============================================================================
+# INTEGRATION HOOKS
+# =============================================================================
+
+integration_hooks:
+  pre_execution:
+    - risk_assessment
+    - confidence_evaluation
+    - approval_check
+    - environment_validation
+    
+  during_execution:
+    - progress_monitoring
+    - checkpoint_validation
+    - user_notification
+    - error_handling
+    
+  post_execution:
+    - outcome_verification
+    - success_confirmation
+    - learning_data_collection
+    - audit_log_creation
+
+# =============================================================================
+# COMMAND-SPECIFIC OVERRIDES
+# =============================================================================
+
+command_overrides:
+  typescripter:
+    default_mode: "analyze_only"
+    auto_execute_flag: "--auto-execute"
+    strategy_approval: required
+    phase_checkpoints: true
+    
+  ci_cd:
+    rollback_approval: "APPROVE + MANUAL_VERIFICATION"
+    deployment_approval: "APPROVE"
+    production_override: false
+    
+  fixer:
+    confidence_threshold: 70
+    nuclear_option_approval: "APPROVE"
+    pattern_explanation: required
+    
+  db_migrate:
+    preview_required: true
+    production_confirmation: "APPROVE"
+    rollback_plan_generation: required
